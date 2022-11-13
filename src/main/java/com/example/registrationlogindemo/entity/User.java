@@ -34,6 +34,9 @@ public class User
     @OneToOne(mappedBy = "user")
     private Student student;
 
+    @OneToOne(mappedBy = "user")
+    private Secretary secretary;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     @JoinTable(
             name="users_roles",

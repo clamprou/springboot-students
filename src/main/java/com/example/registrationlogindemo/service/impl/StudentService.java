@@ -29,4 +29,10 @@ public class StudentService {
     public void saveStudent(Student student) {
         studentRepository.save(student);
     }
+    public Student getStudentByUserId(Long user_id) {
+        return studentRepository.findStudentByUser_Id(user_id);
+    }
+    public List<Student> geStudentsWithStatusPending(){
+        return studentRepository.findAllByStatus("Pending");
+    }
 }

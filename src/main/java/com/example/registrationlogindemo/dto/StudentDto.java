@@ -15,10 +15,9 @@ public class StudentDto {
 
     private Long id;
 
-    @NotEmpty
     private String degree;
-    @NotEmpty
+
     private String studies;
-    @NotEmpty
+
     private Course course;
 }

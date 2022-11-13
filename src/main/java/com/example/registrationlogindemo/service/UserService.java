@@ -4,6 +4,7 @@ import com.example.registrationlogindemo.dto.UserDto;
 import com.example.registrationlogindemo.entity.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
     void saveUser(UserDto userDto);
@@ -12,4 +13,6 @@ public interface UserService {
     User findByEmail(String email);
 
     List<UserDto> findAllUsers();
+
+    Optional<User> findById(Long id);
 }
