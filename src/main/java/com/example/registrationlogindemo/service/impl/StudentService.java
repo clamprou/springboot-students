@@ -28,10 +28,8 @@ public class StudentService {
 
     private StudentDto convertEntityToDto(Student student){
         StudentDto studentDto = new StudentDto();
-        studentDto.setCourse(student.getCourse().getName());
         studentDto.setDegree(student.getDegree());
         studentDto.setStudies(student.getStudies());
-        studentDto.setId(student.getId());
         return studentDto;
     }
 
@@ -39,8 +37,8 @@ public class StudentService {
         return null;
     }
 
-    public void saveStudent(Student student) {
-        studentRepository.save(student);
+    public Student saveStudent(Student student) {
+        return studentRepository.save(student);
     }
     public Student getStudentByUserId(Long user_id) {
         return studentRepository.findStudentByUser_Id(user_id);

@@ -1,9 +1,9 @@
 package com.example.registrationlogindemo.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.beans.factory.annotation.Value;
+
+import javax.persistence.*;
 
 @Setter
 @Getter

@@ -1,11 +1,8 @@
 package com.example.registrationlogindemo.dto;
 
-import com.example.registrationlogindemo.entity.Course;
-import com.example.registrationlogindemo.entity.User;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
 import lombok.*;
+
+import javax.validation.constraints.Email;
 
 @Getter
 @Setter
@@ -13,11 +10,13 @@ import lombok.*;
 @AllArgsConstructor
 public class StudentDto {
 
-    private Long id;
+    private Long course_id;
+
+    private String user_email;
 
     private String degree;
 
     private String studies;
 
-    private String course;
+
 }
