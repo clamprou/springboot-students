@@ -19,5 +19,5 @@ public class StudentDto {
 
     private String studies;
 
-    private Course course;
+    private String course;
 }

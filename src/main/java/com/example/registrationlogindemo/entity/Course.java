@@ -1,5 +1,6 @@
 package com.example.registrationlogindemo.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,6 +20,7 @@ public class Course {
 
     private String name;
 
+    @JsonBackReference
     @OneToOne(mappedBy = "course")
     private Student student;
 }

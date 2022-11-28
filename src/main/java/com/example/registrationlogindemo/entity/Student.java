@@ -1,5 +1,6 @@
 package com.example.registrationlogindemo.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,6 +18,7 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL)
     @JoinTable(name = "student_user",
     joinColumns = {@JoinColumn(name = "student_id",referencedColumnName = "id")},
@@ -27,6 +29,7 @@ public class Student {
 
     private String studies;
 
+    @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL)
     @JoinTable(name = "student_course",
             joinColumns = { @JoinColumn(name = "student_id", referencedColumnName = "id") },

@@ -1,5 +1,7 @@
 package com.example.registrationlogindemo.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -31,12 +33,15 @@ public class User
     @Column(nullable=false)
     private String password;
 
+    @JsonBackReference
     @OneToOne(mappedBy = "user")
     private Student student;
 
+    @JsonBackReference
     @OneToOne(mappedBy = "user")
     private Secretary secretary;
 
+    @JsonBackReference
     @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     @JoinTable(
             name="users_roles",
