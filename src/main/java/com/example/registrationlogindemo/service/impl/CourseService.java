@@ -22,4 +22,13 @@ public class CourseService {
     public Optional<Course> getCourse(Long id){
         return courseRepository.findById(id);
     }
+
+    public Course saveCourse(Course course) {
+        courseRepository.save(course);
+        return course;
+    }
+
+    public Course getCourseByName(String name) {
+        return courseRepository.findByName(name);
+    }
 }

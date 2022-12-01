@@ -56,7 +56,7 @@ public class AuthController {
     }
 
     // handler method to handle user registration request
-    @GetMapping("register")
+    @GetMapping("/register")
     public String showRegistrationForm(Model model){
         UserDto user = new UserDto();
         model.addAttribute("user", user);
@@ -77,6 +77,11 @@ public class AuthController {
         userService.saveUser(user);
 //        SecurityContextHolder.getContext().setAuthentication(Authentication);
         return "redirect:/register?success";
+    }
+
+    @GetMapping("/unauthorized")
+    public String unauthorized(){
+        return "unauthorized";
     }
 
     @PostMapping("/apply/save")

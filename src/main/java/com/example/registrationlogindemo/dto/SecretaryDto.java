@@ -1,6 +1,9 @@
 package com.example.registrationlogindemo.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -9,16 +12,10 @@ import javax.validation.constraints.NotEmpty;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class StudentDto {
-    @NotEmpty
-    private Long course_id;
+public class SecretaryDto {
     @Email
     @NotEmpty
     private String user_email;
     @NotEmpty
-    private String degree;
-    @NotEmpty
-    private String studies;
-
-
+    private String name;
 }

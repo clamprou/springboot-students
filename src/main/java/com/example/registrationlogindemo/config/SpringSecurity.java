@@ -43,6 +43,13 @@ public class SpringSecurity {
                 .antMatchers("/index").permitAll()
                 .antMatchers("/users").hasRole("ADMIN")
                 .antMatchers("/students").hasRole("ADMIN")
+                .antMatchers("/apply/save").hasAnyRole("USER","ACTIVE")
+                .antMatchers("/apply").hasRole("USER")
+                .antMatchers("/apply").hasRole("ACTIVE")
+                .antMatchers("/applies").hasRole("SECRETARY").and().exceptionHandling().accessDeniedPage("/unauthorized")
+                .and()
+                .authorizeRequests()
+                .antMatchers("/applies").hasRole("ACTIVE")
                 .and().
                 formLogin(
                         form -> form
