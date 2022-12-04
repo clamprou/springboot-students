@@ -25,5 +25,13 @@ public class SecretaryService {
     public Secretary getSecretaryByUserId(Long user_id){
         return secretaryRepository.findSecretaryByUser_Id(user_id);
     }
+    public Secretary getSecretaryByUserEmail(String user_email){
+        return secretaryRepository.findSecretaryByUserEmail(user_email);
+    }
+
+    public Secretary saveSecretary(Secretary secretary){
+        secretaryRepository.save(secretary);
+        return secretary;
+    }
 
 }

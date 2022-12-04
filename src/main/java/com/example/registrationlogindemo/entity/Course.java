@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 
@@ -27,6 +28,6 @@ public class Course {
 
     @ApiModelProperty(hidden = true)
     @JsonBackReference
-    @OneToOne(mappedBy = "course")
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Student student;
 }

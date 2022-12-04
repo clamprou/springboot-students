@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -15,12 +16,27 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
 @EnableWebSecurity
 public class SpringSecurity {
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurerAdapter() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedMethods("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH");
+            }
+        };
+    }
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -37,31 +53,14 @@ public class SpringSecurity {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/register/**").permitAll()
-                .antMatchers("/index").permitAll()
-                .antMatchers("/users").hasRole("ADMIN")
-                .antMatchers("/students").hasRole("ADMIN")
-                .antMatchers("/apply/save").hasAnyRole("USER","ACTIVE")
-                .antMatchers("/apply").hasRole("USER")
-                .antMatchers("/apply").hasRole("ACTIVE")
-                .antMatchers("/applies").hasRole("SECRETARY").and().exceptionHandling().accessDeniedPage("/unauthorized")
-                .and()
-                .authorizeRequests()
-                .antMatchers("/applies").hasRole("ACTIVE")
-                .and().
-                formLogin(
-                        form -> form
-                                .loginPage("/login")
-                                .loginProcessingUrl("/login")
-                                .defaultSuccessUrl("/default")
-                                .permitAll()
-                ).logout(
-                        logout -> logout
-                                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                                .permitAll()
-                );
+        http
+                .cors().and().csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+
+                .httpBasic();
+
+
+
         return http.build();
     }
 

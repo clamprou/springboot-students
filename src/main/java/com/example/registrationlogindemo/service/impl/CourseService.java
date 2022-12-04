@@ -19,8 +19,8 @@ public class CourseService {
 
     public List<Course> getCourses(){return courseRepository.findAll();}
 
-    public Optional<Course> getCourse(Long id){
-        return courseRepository.findById(id);
+    public Course getCourse(String name){
+        return courseRepository.findByName(name);
     }
 
     public Course saveCourse(Course course) {

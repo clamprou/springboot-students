@@ -1,6 +1,8 @@
 package com.example.registrationlogindemo.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.persistence.*;
@@ -29,6 +31,7 @@ public class User
     @Column(nullable=false, unique=true)
     private String email;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(nullable=false)
     private String password;
 

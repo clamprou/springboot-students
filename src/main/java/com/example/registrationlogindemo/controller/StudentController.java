@@ -7,7 +7,9 @@ import com.example.registrationlogindemo.service.UserService;
 import com.example.registrationlogindemo.service.impl.CourseService;
 import com.example.registrationlogindemo.service.impl.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -26,10 +28,6 @@ public class StudentController {
         this.userService = userService;
     }
 
-    @GetMapping(path = "myapi/studentsdto")
-    public List<StudentDto> getStudentsDto(){
-        return studentService.getStudentsDto();
-    }
     @GetMapping(path = "myapi/students")
     public List<Student> getStudents(){
         return studentService.getStudents();
@@ -37,14 +35,23 @@ public class StudentController {
 
     @PostMapping(path = "myapi/student")
     public Student newStudent(@RequestBody StudentDto studentDto){
+        if (userService.findByEmail(studentDto.getUser_email()) == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User with email: "+ studentDto.getUser_email() +" doesnt exists!");
+        }
+        if(studentService.findByEmail(studentDto.getUser_email()) != null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Student with email: "+ studentDto.getUser_email() +" already exists!");
+        }
+        if(courseService.getCourse(studentDto.getCourse_name()) == null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Course with name: "+ studentDto.getCourse_name() +" doesnt exists!");
+        }
         Student student = new Student();
         student.setStatus("Pending");
         student.setStudies(studentDto.getStudies());
         student.setDegree(studentDto.getDegree());
-        student.setCourse(courseService.getCourse(studentDto.getCourse_id()).get());
+        student.setCourse(courseService.getCourse(studentDto.getCourse_name()));
 
         User user = userService.findByEmail(studentDto.getUser_email());
         student.setUser(user);
-        return studentService.saveStudent(studentService.saveStudent(student));
+        return studentService.saveStudent(student);
     }
 }

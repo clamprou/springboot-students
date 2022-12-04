@@ -17,5 +17,5 @@ public class SecretaryDto {
     @NotEmpty
     private String user_email;
     @NotEmpty
-    private String name;
+    private String details;
 }

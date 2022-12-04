@@ -2,11 +2,15 @@ package com.example.registrationlogindemo.service.impl;
 
 
 import com.example.registrationlogindemo.dto.StudentDto;
+import com.example.registrationlogindemo.entity.Role;
 import com.example.registrationlogindemo.entity.Student;
+import com.example.registrationlogindemo.repository.RoleRepository;
 import com.example.registrationlogindemo.repository.StudentRepository;
+import com.example.registrationlogindemo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,10 +18,14 @@ import java.util.stream.Collectors;
 public class StudentService {
 
     private final StudentRepository studentRepository;
+    private final RoleRepository roleRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public StudentService(StudentRepository studentRepository) {
+    public StudentService(StudentRepository studentRepository, RoleRepository roleRepository, UserRepository userRepository) {
         this.studentRepository = studentRepository;
+        this.roleRepository = roleRepository;
+        this.userRepository = userRepository;
     }
 
     public List<StudentDto> getStudentsDto(){
@@ -38,7 +46,14 @@ public class StudentService {
     }
 
     public Student saveStudent(Student student) {
-        return studentRepository.save(student);
+        Role role = roleRepository.findByName("ROLE_STUDENT");
+        if(role == null){
+            role = checkRoleExist("ROLE_STUDENT");
+        }
+        student.getUser().getRoles().add(role);
+        userRepository.save(student.getUser());
+        studentRepository.save(student);
+        return student;
     }
     public Student getStudentByUserId(Long user_id) {
         return studentRepository.findStudentByUser_Id(user_id);
@@ -48,5 +63,11 @@ public class StudentService {
     }
     public List<Student> getStudents() {
         return studentRepository.findAll();
+    }
+
+    public Role checkRoleExist(String role) {
+        Role rolee = new Role();
+        rolee.setName(role);
+        return roleRepository.save(rolee);
     }
 }

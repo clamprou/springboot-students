@@ -29,5 +29,5 @@ public class Secretary {
             inverseJoinColumns = {@JoinColumn(name = "user_id",referencedColumnName = "id")})
     private User user;
 
-    private String name;
+    private String details;
 }

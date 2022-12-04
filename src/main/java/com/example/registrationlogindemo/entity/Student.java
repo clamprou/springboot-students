@@ -30,7 +30,7 @@ public class Student {
     private String studies;
 
     @JsonManagedReference
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinTable(name = "student_course",
             joinColumns = { @JoinColumn(name = "student_id", referencedColumnName = "id") },
             inverseJoinColumns = {@JoinColumn(name = "course_id",referencedColumnName = "id")})
