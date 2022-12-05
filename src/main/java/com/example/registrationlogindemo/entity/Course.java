@@ -26,8 +26,10 @@ public class Course {
 
     private String name;
 
-    @ApiModelProperty(hidden = true)
+    private String details;
+
+//    @ApiModelProperty(hidden = true)
     @JsonBackReference
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "course", fetch = FetchType.LAZY)
     private Student student;
 }

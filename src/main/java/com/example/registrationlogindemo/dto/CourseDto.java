@@ -14,4 +14,6 @@ import javax.validation.constraints.NotEmpty;
 public class CourseDto {
     @NotEmpty
     private String name;
+    @NotEmpty
+    private String details;
 }

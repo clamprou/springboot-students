@@ -24,9 +24,9 @@ public class Secretary {
     @ApiModelProperty(hidden = true)
     @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinTable(name = "secretary_user",
-            joinColumns = {@JoinColumn(name = "secretary_id",referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "user_id",referencedColumnName = "id")})
+//    @JoinTable(name = "secretary_user",
+//            joinColumns = {@JoinColumn(name = "secretary_id",referencedColumnName = "id")},
+//            inverseJoinColumns = {@JoinColumn(name = "user_id",referencedColumnName = "id")})
     private User user;
 
     private String details;
