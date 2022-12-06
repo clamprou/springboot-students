@@ -19,8 +19,8 @@ public class CourseService {
 
     public List<Course> getCourses(){return courseRepository.findAll();}
 
-    public Course getCourse(String name){
-        return courseRepository.findByName(name);
+    public Course getCourse(String title){
+        return courseRepository.findByTitle(title);
     }
 
     public Course saveCourse(Course course) {
@@ -28,7 +28,12 @@ public class CourseService {
         return course;
     }
 
-    public Course getCourseByName(String name) {
-        return courseRepository.findByName(name);
+    public Course getCourseByTitle(String title) {
+        return courseRepository.findByTitle(title);
+    }
+
+    public Course deleteCourse(Course course){
+        courseRepository.delete(course);
+        return course;
     }
 }

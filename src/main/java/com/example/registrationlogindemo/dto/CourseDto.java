@@ -13,7 +13,7 @@ import javax.validation.constraints.NotEmpty;
 @AllArgsConstructor
 public class CourseDto {
     @NotEmpty
-    private String name;
+    private String title;
     @NotEmpty
     private String details;
 }

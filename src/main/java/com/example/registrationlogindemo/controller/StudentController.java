@@ -41,14 +41,14 @@ public class StudentController {
         if(studentService.findByEmail(studentDto.getUser_email()) != null){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Student with email: "+ studentDto.getUser_email() +" already exists!");
         }
-        if(courseService.getCourse(studentDto.getCourse_name()) == null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Course with name: "+ studentDto.getCourse_name() +" doesnt exists!");
+        if(courseService.getCourse(studentDto.getCourse_title()) == null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Course with title: "+ studentDto.getCourse_title() +" doesnt exists!");
         }
         Student student = new Student();
         student.setStatus("Pending");
         student.setStudies(studentDto.getStudies());
         student.setDegree(studentDto.getDegree());
-        student.setCourse(courseService.getCourse(studentDto.getCourse_name()));
+        student.setCourse(courseService.getCourse(studentDto.getCourse_title()));
 
         User user = userService.findByEmail(studentDto.getUser_email());
         student.setUser(user);

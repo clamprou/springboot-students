@@ -26,12 +26,29 @@ public class CourseController {
 
     @PostMapping(path = "myapi/course")
     public Course newCourse(@RequestBody CourseDto courseDto) {
-        if (courseService.getCourseByName(courseDto.getName()) != null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Course with name: "+ courseDto.getName() +" already exists!");
+        if (courseService.getCourseByTitle(courseDto.getTitle()) != null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Course with title: "+ courseDto.getTitle() +" already exists!");
         }
         Course course = new Course();
         course.setDetails(courseDto.getDetails());
-        course.setName(courseDto.getName());
+        course.setTitle(courseDto.getTitle());
         return courseService.saveCourse(course);
+    }
+    @PutMapping(path = "myapi/course")
+    public Course editCourse(@RequestBody CourseDto courseDto) {
+        if (courseService.getCourseByTitle(courseDto.getTitle()) == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Course with title: "+ courseDto.getTitle() +" doesnt exists!");
+        }
+        Course course = courseService.getCourseByTitle(courseDto.getTitle());
+        course.setDetails(courseDto.getDetails());
+        return courseService.saveCourse(course);
+    }
+
+    @DeleteMapping(path = "myapi/course/{title}")
+    public Course deleteCourse(@PathVariable String title){
+        if (courseService.getCourseByTitle(title) == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Course with title: "+ title +" doesnt exists!");
+        }
+        return courseService.deleteCourse(courseService.getCourseByTitle(title));
     }
 }

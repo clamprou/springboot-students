@@ -11,7 +11,7 @@ import javax.validation.constraints.NotEmpty;
 @AllArgsConstructor
 public class StudentDto {
     @NotEmpty
-    private String course_name;
+    private String course_title;
     @Email
     @NotEmpty
     private String user_email;
