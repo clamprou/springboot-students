@@ -1,12 +1,12 @@
 package com.example.registrationlogindemo.controller;
 
-import com.example.registrationlogindemo.dto.StudentDto;
 import com.example.registrationlogindemo.dto.UserDto;
-import com.example.registrationlogindemo.entity.Student;
+import com.example.registrationlogindemo.entity.Role;
 import com.example.registrationlogindemo.entity.User;
 import com.example.registrationlogindemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Stream;
 
 @RestController
 public class UserController {
@@ -39,5 +40,11 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"User with email: "+ userDto.getEmail() +" already exists!");
         }
         return userService.saveUser(userDto);
+    }
+    @GetMapping(path = "myapi/who")
+    public Stream<String> who(){
+        User user = userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        List<Role> roles = user.getRoles();
+        return roles.stream().map(role -> role.getName());
     }
 }

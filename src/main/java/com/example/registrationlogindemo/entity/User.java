@@ -26,6 +26,9 @@ public class User
     private Long id;
 
     @Column(nullable=false)
+    private Boolean activated = false;
+
+    @Column(nullable=false)
     private String name;
 
     @Column(nullable=false, unique=true)
