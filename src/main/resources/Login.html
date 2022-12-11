@@ -72,36 +72,62 @@
             }
         }
     </style>
+    <script>
+        function myFunction(){
+            var data = "";
+            var xhr = new XMLHttpRequest();
+            xhr.withCredentials = false;
+            xhr.addEventListener("readystatechange", function(e) {
+                if(this.readyState === 4) {
+                    console.log(this.status)
+                    if(this.status == 200){
+                        if(JSON.parse(this.responseText).includes("ROLE_SECRETARY")){
+                            document.getElementById("secretary").click();
+                        }else if(JSON.parse(this.responseText).includes("ROLE_STUDENT")){
+                            document.getElementById("student").click();
+                        }else if(JSON.parse(this.responseText).includes("ROLE_USER")){
+                            document.getElementById("justuser").click();
+                        }else{
+                            alert("error try again");
+                        }
+                    }else{
+                        alert("error try again");
+                    }
+                }
+            });
+            var basic64 = btoa(document.getElementById("username").value+":"+document.getElementById("password").value);
+            xhr.open("GET", "http://localhost:8080/myapi/who");
+            xhr.setRequestHeader("Authorization", "Basic "+basic64);
+            xhr.send(data);
+        }
+    </script>
 </head>
 <body>
 
-<h1>Register</h1>
+<h1 >Login</h1>
 
-<form action="/action_page.php">
+<form id="login">
     <div class="imgcontainer">
         <img src="../../img_avatar2.png" alt="Avatar" class="avatar">
     </div>
+
+    <a id="secretary" href='/Secretary.html' hidden></a>
+    <a id="student" href='/Student.html' hidden></a>
+    <a id="justuser" href='/Student.html' hidden></a>
+
     <div class="container">
-        <label for="email"><b>Email</b></label>
-        <input type="text" placeholder="Enter Email" name="email" id="email" required>
+        <label for="username"><b>Username</b></label>
+        <input id="username" type="text" placeholder="Enter Username" name="username" required>
 
-        <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
+        <label for="password"><b>Password</b></label>
+        <input id="password" type="password" placeholder="Enter Password" name="password" required>
 
-        <label for="psw-repeat"><b>Repeat Password</b></label>
-        <input type="password" placeholder="Repeat Password" name="psw-repeat" id="psw-repeat" required>
-        <hr>
-        <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
-
-        <button type="submit" class="registerbtn">Register</button>
+        <button type="button" onclick="myFunction()">Login</button>
     </div>
 
-<!--    <div class="container signin">-->
-<!--        <p>Already have an account? <a href="#">Sign in</a>.</p>-->
-<!--    </div>-->
     <div class="container" style="background-color:#3fd2c3">
         <a type="button" class="cancelbtn" href="/">Cancel</a>
-        <span class="psw">Already have an account? <a href="">Login</a></span>
+        <span class="psw">Forgot <a href="">password?</a></span>
     </div>
 </form>
 
