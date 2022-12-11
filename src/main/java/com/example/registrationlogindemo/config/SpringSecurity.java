@@ -59,6 +59,7 @@ public class SpringSecurity {
                 .antMatchers("/myapi/course").hasRole("SECRETARY")
                 .and().authorizeRequests()
                 .antMatchers("/myapi/who").authenticated()
+                .antMatchers("/myapi/whoami").authenticated()
                 .and()
                 .httpBasic();
 

@@ -47,7 +47,11 @@ public class StudentController {
         Student student = new Student();
         student.setStatus("Pending");
         student.setStudies(studentDto.getStudies());
-        student.setDegree(studentDto.getDegree());
+        student.setNationality(studentDto.getNationality());
+        student.setAddress(studentDto.getAddress());
+        student.setPhone(studentDto.getPhone());
+        student.setBirth(studentDto.getBirth());
+        student.setWhy(studentDto.getWhy());
         student.setCourse(courseService.getCourse(studentDto.getCourse_title()));
 
         User user = userService.findByEmail(studentDto.getUser_email());

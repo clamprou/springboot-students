@@ -36,7 +36,7 @@ public class StudentService {
 
     private StudentDto convertEntityToDto(Student student){
         StudentDto studentDto = new StudentDto();
-        studentDto.setDegree(student.getDegree());
+        studentDto.setNationality(student.getNationality());
         studentDto.setStudies(student.getStudies());
         return studentDto;
     }

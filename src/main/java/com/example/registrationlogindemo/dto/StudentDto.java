@@ -16,9 +16,15 @@ public class StudentDto {
     @NotEmpty
     private String user_email;
     @NotEmpty
-    private String degree;
+    private String Nationality;
+    @NotEmpty
+    private String address;
     @NotEmpty
     private String studies;
-
-
+    @NotEmpty
+    private String phone;
+    @NotEmpty
+    private String birth;
+    @NotEmpty
+    private String why;
 }

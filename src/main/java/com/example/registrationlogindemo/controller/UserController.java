@@ -47,4 +47,9 @@ public class UserController {
         List<Role> roles = user.getRoles();
         return roles.stream().map(role -> role.getName());
     }
+    @GetMapping(path = "myapi/whoami")
+    public String whoami(){
+        User user = userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        return user.getEmail();
+    }
 }

@@ -25,12 +25,14 @@ public class User
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     @Column(nullable=false)
     private Boolean activated = false;
 
     @Column(nullable=false)
     private String name;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Column(nullable=false, unique=true)
     private String email;
 

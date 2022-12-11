@@ -36,6 +36,14 @@ public class Student {
 //            inverseJoinColumns = {@JoinColumn(name = "course_id",referencedColumnName = "id")})
     private Course course;
 
-    private String degree;
+    private String nationality;
+
+    private String address;
+
+    private String phone;
+
+    private String birth;
+
+    private String why;
 
 }
