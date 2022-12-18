@@ -4,6 +4,7 @@ package com.example.registrationlogindemo.service.impl;
 import com.example.registrationlogindemo.dto.StudentDto;
 import com.example.registrationlogindemo.entity.Role;
 import com.example.registrationlogindemo.entity.Student;
+import com.example.registrationlogindemo.entity.User;
 import com.example.registrationlogindemo.repository.RoleRepository;
 import com.example.registrationlogindemo.repository.StudentRepository;
 import com.example.registrationlogindemo.repository.UserRepository;
@@ -42,7 +43,11 @@ public class StudentService {
     }
 
     public Student findByEmail(String email) {
-        return null;
+        return studentRepository.findStudentByUser_Id(userRepository.findByEmail(email).getId());
+    }
+
+    public Student findByUserId(Long id) {
+        return studentRepository.findStudentByUser_Id(id);
     }
 
     public Student saveStudent(Student student) {

@@ -4,6 +4,7 @@ import com.example.registrationlogindemo.dto.UserDto;
 import com.example.registrationlogindemo.entity.Role;
 import com.example.registrationlogindemo.entity.User;
 import com.example.registrationlogindemo.service.UserService;
+import com.example.registrationlogindemo.service.impl.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,16 +17,19 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 @RestController
 public class UserController {
     private final UserService userService;
 
+    private final StudentService studentService;
+
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, StudentService studentService) {
         this.userService = userService;
+        this.studentService = studentService;
     }
     @GetMapping(path = "myapi/users")
     public List<UserDto> getUsers(){
@@ -42,10 +46,15 @@ public class UserController {
         return userService.saveUser(userDto);
     }
     @GetMapping(path = "myapi/who")
-    public Stream<String> who(){
+    public ArrayList<String> who(){
         User user = userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         List<Role> roles = user.getRoles();
-        return roles.stream().map(role -> role.getName());
+        ArrayList<String> arrayList = new ArrayList<>(roles.stream().map(role -> role.getName()).toList());
+        if(studentService.findByUserId(user.getId()) != null){
+            arrayList.add("applied");
+            return arrayList;
+        }
+        return arrayList;
     }
     @GetMapping(path = "myapi/whoami")
     public String whoami(){

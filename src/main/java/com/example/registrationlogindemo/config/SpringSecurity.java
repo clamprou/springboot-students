@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import org.springframework.security.web.SecurityFilterChain;
 
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -60,6 +61,8 @@ public class SpringSecurity {
                 .and().authorizeRequests()
                 .antMatchers("/myapi/who").authenticated()
                 .antMatchers("/myapi/whoami").authenticated()
+                .antMatchers("/myapi/has_applied").authenticated()
+                .antMatchers("/myapi/student").authenticated()
                 .and()
                 .httpBasic();
 

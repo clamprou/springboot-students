@@ -8,6 +8,7 @@ import com.example.registrationlogindemo.service.impl.CourseService;
 import com.example.registrationlogindemo.service.impl.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -31,6 +32,21 @@ public class StudentController {
     @GetMapping(path = "myapi/students")
     public List<Student> getStudents(){
         return studentService.getStudents();
+    }
+    @GetMapping(path = "myapi/student")
+    public Student getStudent(){
+        User user = userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        return studentService.getStudentByUserId(user.getId());
+    }
+
+    @GetMapping(path = "myapi/has_applied")
+    public Boolean hasApplied(){
+        User user = userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        if(studentService.findByUserId(user.getId()) != null){
+            return true;
+        }else {
+            return false;
+        }
     }
 
     @PostMapping(path = "myapi/student")
