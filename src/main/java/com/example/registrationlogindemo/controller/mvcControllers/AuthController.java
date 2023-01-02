@@ -1,10 +1,8 @@
-package com.example.registrationlogindemo.controller;
+package com.example.registrationlogindemo.controller.mvcControllers;
 
-import com.example.registrationlogindemo.dto.StudentDto;
+import com.example.registrationlogindemo.dto.CourseDto;
 import com.example.registrationlogindemo.dto.UserDto;
-import com.example.registrationlogindemo.entity.Role;
-import com.example.registrationlogindemo.entity.Student;
-import com.example.registrationlogindemo.entity.User;
+import com.example.registrationlogindemo.entity.*;
 import com.example.registrationlogindemo.repository.RoleRepository;
 import com.example.registrationlogindemo.security.CustomUserDetailsService;
 import com.example.registrationlogindemo.service.UserService;
@@ -12,12 +10,12 @@ import com.example.registrationlogindemo.service.impl.CourseService;
 import com.example.registrationlogindemo.service.impl.SecretaryService;
 import com.example.registrationlogindemo.service.impl.StudentService;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -36,13 +34,16 @@ public class AuthController {
 
     private SecretaryService secretaryService;
 
+    private PasswordEncoder passwordEncoder;
 
-    public AuthController(UserService userService, StudentService studentService, RoleRepository roleRepository, CourseService courseService, CustomUserDetailsService customUserDetailsService, SecretaryService secretaryService) {
+
+    public AuthController(UserService userService, StudentService studentService, RoleRepository roleRepository, CourseService courseService, CustomUserDetailsService customUserDetailsService, SecretaryService secretaryService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.studentService = studentService;
         this.roleRepository = roleRepository;
         this.courseService = courseService;
         this.secretaryService = secretaryService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("index")
@@ -56,28 +57,28 @@ public class AuthController {
     }
 
     // handler method to handle user registration request
-    @GetMapping("/register")
-    public String showRegistrationForm(Model model){
-        UserDto user = new UserDto();
-        model.addAttribute("user", user);
-        return "register";
-    }
+//    @GetMapping("/register")
+//    public String showRegistrationForm(Model model){
+//        UserDto user = new UserDto();
+//        model.addAttribute("user", user);
+//        return "register";
+//    }
 
     // handler method to handle register user form submit request
-    @PostMapping("/register/save")
-    public String registration(@Valid @ModelAttribute("user") UserDto user, BindingResult result, Model model){
-        User existing = userService.findByEmail(user.getEmail());
-        if (existing != null) {
-            result.rejectValue("email", null, "There is already an account registered with that email");
-        }
-        if (result.hasErrors()) {
-            model.addAttribute("user", user);
-            return "register";
-        }
-        userService.saveUser(user);
-//        SecurityContextHolder.getContext().setAuthentication(Authentication);
-        return "redirect:/register?success";
-    }
+//    @PostMapping("/register/save")
+//    public String registration(@Valid @ModelAttribute("user") UserDto user, BindingResult result, Model model){
+//        User existing = userService.findByEmail(user.getEmail());
+//        if (existing != null) {
+//            result.rejectValue("email", null, "There is already an account registered with that email");
+//        }
+//        if (result.hasErrors()) {
+//            model.addAttribute("user", user);
+//            return "register";
+//        }
+//        userService.saveUser(user);
+////        SecurityContextHolder.getContext().setAuthentication(Authentication);
+//        return "redirect:/register?success";
+//    }
 
     @GetMapping("/unauthorized")
     public String unauthorized(){
@@ -121,13 +122,6 @@ public class AuthController {
         model.addAttribute("student", student);
         model.addAttribute("courses", courseService.getCourses());
         return "apply";
-    }
-
-    @GetMapping("/users")
-    public String listRegisteredUsers(Model model){
-        List<UserDto> users = userService.findAllUsers();
-        model.addAttribute("users", users);
-        return "users";
     }
 
     @GetMapping("/applies")

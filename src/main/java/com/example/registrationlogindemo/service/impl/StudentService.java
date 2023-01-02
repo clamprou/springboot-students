@@ -46,8 +46,17 @@ public class StudentService {
         return studentRepository.findStudentByUser_Id(userRepository.findByEmail(email).getId());
     }
 
+    public List<Student> getStudentsWithCourse(String title){
+        return studentRepository.findAllByCourseTitle(title);
+    }
+
     public Student findByUserId(Long id) {
         return studentRepository.findStudentByUser_Id(id);
+    }
+
+    public Student deleteStudent(Student student){
+        studentRepository.delete(student);
+        return student;
     }
 
     public Student saveStudent(Student student) {

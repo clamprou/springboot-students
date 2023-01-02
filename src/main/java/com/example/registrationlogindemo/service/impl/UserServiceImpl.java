@@ -48,6 +48,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void deleteUser(User user){
+        userRepository.delete(user);
+    }
+    @Override
     public void saveUser(User user) {
         userRepository.save(user);
     }
@@ -60,6 +64,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDto> findAllUsers() {
         List<User> users = userRepository.findAll();
+        return users.stream().map((user) -> convertEntityToDto(user))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UserDto> findAllUsersNotActivated(){
+        List<User> users = userRepository.findAllByActivated(false);
         return users.stream().map((user) -> convertEntityToDto(user))
                 .collect(Collectors.toList());
     }

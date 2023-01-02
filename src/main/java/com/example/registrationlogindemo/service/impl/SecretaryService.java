@@ -52,4 +52,11 @@ public class SecretaryService {
         return roleRepository.save(rolee);
     }
 
+    public Secretary findByEmail(String email) {
+        return secretaryRepository.findSecretaryByUserEmail(email);
+    }
+
+    public void deleteSecretary(Secretary secretary) {
+        secretaryRepository.delete(secretary);
+    }
 }
