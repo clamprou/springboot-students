@@ -46,6 +46,12 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         return convertEntityToDto(user);
     }
+    @Override
+    public List<UserDto> getUsersWithRoleSecretary(Role role){
+        List<User> users = userRepository.findAllByRoles(role);
+        return users.stream().map((user) -> convertEntityToDto(user))
+                .collect(Collectors.toList());
+    }
 
     @Override
     public void deleteUser(User user){
@@ -80,6 +86,13 @@ public class UserServiceImpl implements UserService {
          return userRepository.findById(id);
     }
 
+    @Override
+    public List<UserDto> findAllUsersActivated() {
+        List<User> users = userRepository.findAllByActivated(true);
+        return users.stream().map((user) -> convertEntityToDto(user))
+                .collect(Collectors.toList());
+    }
+
     private UserDto convertEntityToDto(User user){
         UserDto userDto = new UserDto();
         String[] name = user.getName().split(" ");
@@ -87,6 +100,8 @@ public class UserServiceImpl implements UserService {
         userDto.setFirstName(name[0]);
         userDto.setLastName(name[1]);
         userDto.setEmail(user.getEmail());
+        userDto.setActivated(user.getActivated());
+        userDto.setRoles(user.getRoles());
         return userDto;
     }
 

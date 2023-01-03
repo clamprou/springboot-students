@@ -1,9 +1,7 @@
 package com.example.registrationlogindemo.controller.mvcControllers;
 
 import com.example.registrationlogindemo.dto.UserDto;
-import com.example.registrationlogindemo.entity.Course;
 import com.example.registrationlogindemo.entity.Secretary;
-import com.example.registrationlogindemo.entity.User;
 import com.example.registrationlogindemo.repository.RoleRepository;
 import com.example.registrationlogindemo.service.UserService;
 import com.example.registrationlogindemo.service.impl.CourseService;
@@ -33,10 +31,10 @@ public class SecretaryControllerMvc {
     }
     @GetMapping("/secretaries")
     public String listCourses(Model model){
-        List<UserDto> users = userService.findAllUsersNotActivated();
+        List<UserDto> users = userService.getUsersWithRoleSecretary(roleRepository.findByName("ROLE_SECRETARY"));
         model.addAttribute("users", users);
         model.addAttribute("user", new UserDto());
         model.addAttribute("secretary", new Secretary());
-        return "secretaries";
+        return "roles";
     }
 }

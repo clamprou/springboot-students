@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -46,6 +47,76 @@ public class UserControllerMvc {
         model.addAttribute("users", users);
         model.addAttribute("user", new UserDto());
         return "users";
+    }
+
+    @GetMapping("/activated")
+    public String getActivatedUsers(Model model){
+        List<UserDto> users = userService.findAllUsersActivated();
+        model.addAttribute("users", users);
+        model.addAttribute("user", new UserDto());
+        return "activated";
+    }
+
+    @GetMapping("/roles")
+    public String getNotActivatedUsers(Model model){
+        List<UserDto> users = userService.findAllUsers();
+        model.addAttribute("users", users);
+        model.addAttribute("user", new UserDto());
+        return "roles";
+    }
+
+    @RequestMapping(value = "/activate_student", method = RequestMethod.GET)
+    public String activateStudent(@RequestParam(name="email")String email, RedirectAttributes redirectAttributes){
+        User existing = userService.findByEmail(email);
+//        if (existing == null) {
+//            result.rejectValue("email", null, "There is not an account registered with that email");
+//        }
+//        if (result.hasErrors()) {
+//            return "redirect:/not_activated";
+//        }
+        existing.setActivated(true);
+        Role role = roleRepository.findByName("ROLE_STUDENT");
+        if(role == null){
+            role = checkRoleExist("ROLE_STUDENT");
+        }
+        List<Role> roles = existing.getRoles();
+        if(!roles.contains(role)){
+            roles.add(role);
+            existing.setRoles(roles);
+        }
+        if(roles.contains(roleRepository.findByName("ROLE_SECRETARY"))){
+            roles.remove(roleRepository.findByName("ROLE_SECRETARY"));
+            existing.setRoles(roles);
+        }
+        userService.saveUser(existing);
+        return "redirect:/roles";
+    }
+
+    @RequestMapping(value = "/activate_secretary", method = RequestMethod.GET)
+    public String activateSecretary(@RequestParam(name="email")String email, RedirectAttributes redirectAttributes){
+        User existing = userService.findByEmail(email);
+//        if (existing == null) {
+//            result.rejectValue("email", null, "There is not an account registered with that email");
+//        }
+//        if (result.hasErrors()) {
+//            return "redirect:/not_activated";
+//        }
+        existing.setActivated(true);
+        Role role = roleRepository.findByName("ROLE_SECRETARY");
+        if(role == null){
+            role = checkRoleExist("ROLE_SECRETARY");
+        }
+        List<Role> roles = existing.getRoles();
+        if(!roles.contains(role)){
+            roles.add(role);
+            existing.setRoles(roles);
+        }
+        if(roles.contains(roleRepository.findByName("ROLE_STUDENT"))){
+            roles.remove(roleRepository.findByName("ROLE_STUDENT"));
+            existing.setRoles(roles);
+        }
+        userService.saveUser(existing);
+        return "redirect:/roles";
     }
 
     @PostMapping("/edit_user")
