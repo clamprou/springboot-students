@@ -21,10 +21,12 @@ public class StudentDto {
     private String address;
     @NotEmpty
     private String studies;
+    private String status;
     @NotEmpty
     private String phone;
     @NotEmpty
     private String birth;
     @NotEmpty
     private String why;
+    private String email;
 }

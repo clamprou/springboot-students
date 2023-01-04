@@ -1,6 +1,7 @@
 package com.example.registrationlogindemo.controller.mvcControllers;
 
 import com.example.registrationlogindemo.dto.UserDto;
+import com.example.registrationlogindemo.dto.UserDto1;
 import com.example.registrationlogindemo.entity.Role;
 import com.example.registrationlogindemo.entity.Secretary;
 import com.example.registrationlogindemo.entity.Student;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -33,13 +33,14 @@ public class UserControllerMvc {
     private SecretaryService secretaryService;
 
     private PasswordEncoder passwordEncoder;
-    public UserControllerMvc(UserService userService, StudentService studentService, RoleRepository roleRepository, CourseService courseService, SecretaryService secretaryService){
+    public UserControllerMvc(UserService userService, StudentService studentService, RoleRepository roleRepository, CourseService courseService, SecretaryService secretaryService, PasswordEncoder passwordEncoder){
 
         this.userService = userService;
         this.studentService = studentService;
         this.roleRepository = roleRepository;
         this.courseService = courseService;
         this.secretaryService = secretaryService;
+        this.passwordEncoder = passwordEncoder;
     }
     @GetMapping("/users")
     public String listRegisteredUsers(Model model){

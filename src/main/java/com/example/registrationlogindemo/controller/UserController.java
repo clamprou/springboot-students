@@ -1,6 +1,7 @@
 package com.example.registrationlogindemo.controller;
 
 import com.example.registrationlogindemo.dto.UserDto;
+import com.example.registrationlogindemo.dto.UserDto1;
 import com.example.registrationlogindemo.entity.Role;
 import com.example.registrationlogindemo.entity.User;
 import com.example.registrationlogindemo.service.UserService;
@@ -36,13 +37,18 @@ public class UserController {
         return userService.findAllUsers();
     }
     @PostMapping(path = "myapi/user")
-    public UserDto newUser(@RequestBody @Valid UserDto userDto, BindingResult bindingResult) throws BindException {
+    public UserDto newUser(@RequestBody UserDto1 userDto1, BindingResult bindingResult) throws BindException {
         if (bindingResult.hasErrors()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Email: "+ userDto.getEmail() +" is not Valid!");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Email: "+ userDto1.getEmail() +" is not Valid!");
         }
-        if (userService.findByEmail(userDto.getEmail()) != null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"User with email: "+ userDto.getEmail() +" already exists!");
+        if (userService.findByEmail(userDto1.getEmail()) != null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"User with email: "+ userDto1.getEmail() +" already exists!");
         }
+        UserDto userDto = new UserDto();
+        userDto.setEmail(userDto1.getEmail());
+        userDto.setFirstName(userDto1.getFirstName());
+        userDto.setLastName(userDto1.getLastName());
+        userDto.setPassword(userDto1.getPassword());
         return userService.saveUser(userDto);
     }
     @GetMapping(path = "myapi/who")

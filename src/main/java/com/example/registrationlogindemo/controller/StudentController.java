@@ -1,6 +1,8 @@
 package com.example.registrationlogindemo.controller;
 
 import com.example.registrationlogindemo.dto.StudentDto;
+import com.example.registrationlogindemo.dto.UserDto;
+import com.example.registrationlogindemo.dto.UserDto2;
 import com.example.registrationlogindemo.entity.Student;
 import com.example.registrationlogindemo.entity.User;
 import com.example.registrationlogindemo.service.UserService;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 //@RequestMapping(path = "")
@@ -30,8 +33,26 @@ public class StudentController {
     }
 
     @GetMapping(path = "myapi/students")
-    public List<Student> getStudents(){
-        return studentService.getStudents();
+    public List<StudentDto> getStudents(){
+        List<Student> students = studentService.geStudentsWithStatusPending();
+        return students.stream().map((student) -> convertEntityToDto(student))
+                .collect(Collectors.toList());
+    }
+
+
+
+    private StudentDto convertEntityToDto(Student student){
+        StudentDto studentDto = new StudentDto();
+        studentDto.setStudies(student.getStudies());
+        studentDto.setNationality(student.getNationality());
+        studentDto.setAddress(student.getAddress());
+        studentDto.setBirth(student.getBirth());
+        studentDto.setPhone(student.getPhone());
+        studentDto.setWhy(student.getWhy());
+        studentDto.setEmail(student.getUser().getEmail());
+        studentDto.setCourse_title(student.getCourse().getTitle());
+        studentDto.setStatus(student.getStatus());
+        return studentDto;
     }
     @GetMapping(path = "myapi/student")
     public Student getStudent(){
@@ -47,6 +68,28 @@ public class StudentController {
         }else {
             return false;
         }
+    }
+
+    @PostMapping(path = "myapi/student/approve")
+    public Student approve(@RequestBody UserDto2 userDto2){
+        User existing = userService.findByEmail(userDto2.getEmail());
+        if ( existing == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User with email: "+ userDto2.getEmail() +" doesnt exists!");
+        }
+        Student student = studentService.findByEmail(userDto2.getEmail());
+        student.setStatus("Approved");
+        return studentService.saveStudent(student);
+    }
+
+    @PostMapping(path = "myapi/student/disapprove")
+    public Student disapprove(@RequestBody UserDto2 userDto2){
+        User existing = userService.findByEmail(userDto2.getEmail());
+        if ( existing == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User with email: "+ userDto2.getEmail() +" doesnt exists!");
+        }
+        Student student = studentService.findByEmail(userDto2.getEmail());
+        student.setStatus("Disapprove");
+        return studentService.saveStudent(student);
     }
 
     @PostMapping(path = "myapi/student")
