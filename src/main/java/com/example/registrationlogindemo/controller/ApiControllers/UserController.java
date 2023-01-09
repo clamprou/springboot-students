@@ -1,4 +1,4 @@
-package com.example.registrationlogindemo.controller;
+package com.example.registrationlogindemo.controller.ApiControllers;
 
 import com.example.registrationlogindemo.dto.UserDto;
 import com.example.registrationlogindemo.dto.UserDto1;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 

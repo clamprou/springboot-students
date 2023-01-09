@@ -1,11 +1,10 @@
-package com.example.registrationlogindemo.controller;
+package com.example.registrationlogindemo.controller.ApiControllers;
 
 import com.example.registrationlogindemo.dto.CourseDto;
 import com.example.registrationlogindemo.entity.Course;
 import com.example.registrationlogindemo.service.impl.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 

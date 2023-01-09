@@ -1,7 +1,6 @@
-package com.example.registrationlogindemo.controller;
+package com.example.registrationlogindemo.controller.ApiControllers;
 
 import com.example.registrationlogindemo.dto.StudentDto;
-import com.example.registrationlogindemo.dto.UserDto;
 import com.example.registrationlogindemo.dto.UserDto2;
 import com.example.registrationlogindemo.entity.Student;
 import com.example.registrationlogindemo.entity.User;
@@ -11,7 +10,10 @@ import com.example.registrationlogindemo.service.impl.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;

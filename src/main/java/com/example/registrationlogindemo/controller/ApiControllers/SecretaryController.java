@@ -1,7 +1,6 @@
-package com.example.registrationlogindemo.controller;
+package com.example.registrationlogindemo.controller.ApiControllers;
 
 import com.example.registrationlogindemo.dto.SecretaryDto;
-import com.example.registrationlogindemo.entity.Course;
 import com.example.registrationlogindemo.entity.Secretary;
 import com.example.registrationlogindemo.entity.User;
 import com.example.registrationlogindemo.service.UserService;

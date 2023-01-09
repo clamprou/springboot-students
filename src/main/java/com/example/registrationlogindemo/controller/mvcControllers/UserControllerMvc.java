@@ -156,6 +156,7 @@ public class UserControllerMvc {
         Secretary secretary = secretaryService.findByEmail(email);
         User user = userService.findByEmail(email);
         Role role = roleRepository.findByName("ROLE_USER");
+        Role role1 = roleRepository.findByName("ROLE_USER");
         if(role == null){
             role = checkRoleExist("ROLE_USER");
         }
@@ -164,30 +165,30 @@ public class UserControllerMvc {
         if(user == null) return "error";
         if(student != null){//if student
             role = roleRepository.findByName("ROLE_STUDENT");
+            role1 = roleRepository.findByName("ROLE_SECRETARY");
             if(role == null){
                 role = checkRoleExist("ROLE_STUDENT");
             }
-            user.getRoles().remove(role);
+            if(user.getRoles().contains(role)) user.getRoles().remove(role);
+            if(user.getRoles().contains(role1)) user.getRoles().remove(role1);
             userService.saveUser(user);
             studentService.deleteStudent(student);
-        }else if (secretary != null){
+        } else {//admin or secretary
             role = roleRepository.findByName("ROLE_SECRETARY");
             if(role == null){
                 role = checkRoleExist("ROLE_SECRETARY");
             }
-            user.getRoles().remove(role);
+            if(user.getRoles().contains(role)) user.getRoles().remove(role);
+            role = roleRepository.findByName("ROLE_STUDENT");
+            if(user.getRoles().contains(role)) user.getRoles().remove(role);
             userService.saveUser(user);
-            secretaryService.deleteSecretary(secretary);
-        } else {//admin
             role = roleRepository.findByName("ROLE_ADMIN");
             if(role == null){
                 role = checkRoleExist("ROLE_ADMIN");
             }
-            user.getRoles().remove(role);
-
-            userService.saveUser(user);
-            userService.deleteUser(user);
+            if(user.getRoles().contains(role)) user.getRoles().remove(role);
         }
+        userService.saveUser(user);
         userService.deleteUser(user);
 
         redirectAttributes.addFlashAttribute("message", "Successful!");
