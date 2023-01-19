@@ -12,10 +12,10 @@
 
 
 ## Create database using sql client:
-### `create database mydb;`
-### `use mydb;`
-### `insert into users values(1,true,'admin@admin.com','admin admin','$2a$10$BwC.9HN.8qYF2jWihQzS8uA6VlooXWAwvNBdv4.l4l1UBAdKDEm3.');`
-### `insert into roles values(1,'ROLE_USER');`
+ `create database mydb;`
+ `use mydb;`
+ `insert into users values(1,true,'admin@admin.com','admin admin','$2a$10$BwC.9HN.8qYF2jWihQzS8uA6VlooXWAwvNBdv4.l4l1UBAdKDEm3.');`
+ `insert into roles values(1,'ROLE_USER');`
 ### `insert into roles values(2,'ROLE_STUDENT');`
 ### `insert into roles values(3,'ROLE_SECRETARY');`
 ### `insert into roles values(4,'ROLE_ADMIN');`
