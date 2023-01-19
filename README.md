@@ -24,3 +24,6 @@
 ### `insert into course values(1,'Some details','Programming');`
 ### `insert into course values(2,'Some details','A.I.');`
 ### `insert into course values(3,'Some details','Web programming');`
+
+## Run with Maven and java 17 installed:
+### `mvn spring-boot:run`
