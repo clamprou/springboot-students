@@ -2,16 +2,16 @@
 
 ## Setup
 
-##Clone the project:
+## Clone the project:
 
 ### `git clone https://github.com/clamprou/springboot-students `
 
-##Create a mysql database with docker (you can use watever you want):
+## Create a mysql database with docker (you can use watever you want):
 
 ### `docker run --name mydb -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -d mysql`
 
 
-##Create database using sql client:
+## Create database using sql client:
 ### `create database mydb;`
 ### `use mydb;`
 ### `insert into users values(1,true,'admin@admin.com','admin admin','$2a$10$BwC.9HN.8qYF2jWihQzS8uA6VlooXWAwvNBdv4.l4l1UBAdKDEm3.');`
