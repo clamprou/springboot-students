@@ -28,4 +28,5 @@
 ### `insert into course values(3,'Some details','Web programming');`
 
 ## Run with Maven and java 17 installed:
-### `mvn spring-boot:run`
+### `mvn clean install`
+### `java -jar targer/registration-login-demo-0.0.1-SNAPSHOT.jar`
