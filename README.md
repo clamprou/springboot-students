@@ -8,7 +8,7 @@
 
 ## Create a mysql database with docker (you can use watever you want):
 
-### `docker run --name mydb -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -d mysql`
+### `sudo docker run --name mydb -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -d mysql`
 
 
 ## Create database using sql client:
