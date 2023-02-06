@@ -16,7 +16,7 @@
 ### `use mydb;`
 
 ## It is important to do the inserts after running for the first time the app because inserts will fail cause tables are not created
-### `insert into users values(1,true,'admin@admin.com','admin admin','$2a$10$BwC.9HN.8qYF2jWihQzS8uA6VlooXWAwvNBdv4.l4l1UBAdKDEm3.');`
+### `insert into users values(1,true,'admin@admin.com','admin admin','$2a$10$BFx2bsSiyw6.uqL3gnMh5eMYb5uvpDa9yzr9JyAFIKyG//kw3rzqK');`
 ### `insert into roles values(1,'ROLE_USER');`
 ### `insert into roles values(2,'ROLE_STUDENT');`
 ### `insert into roles values(3,'ROLE_SECRETARY');`
