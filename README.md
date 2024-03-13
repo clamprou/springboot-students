@@ -1,6 +1,6 @@
 # Spring Boot Student Managment App (Backend)
 
-## [Documentation](Documentation.pdf)
+## [Documentation.pdf](Documentation.pdf)
 
 ## Setup
 
