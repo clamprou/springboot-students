@@ -1,5 +1,7 @@
 # Spring Boot Student Managment App (Backend)
 
+## [Documentation](Documentation.pdf)
+
 ## Setup
 
 ## Clone the project:
