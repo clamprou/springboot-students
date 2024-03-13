@@ -30,3 +30,5 @@
 ## Run with Maven and java 17 installed:
 ### `mvn clean install`
 ### `java -jar targer/registration-login-demo-0.0.1-SNAPSHOT.jar`
+
+![Screenshot 2024-03-13 213958.png](Screenshot%202024-03-13%20213958.png)
